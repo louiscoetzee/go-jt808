@@ -1,53 +1,54 @@
 # go-jt808
 
-- 本项目已更好支持二次开发为目标 可通过各种自定义事件去完成相应功能 常见案例如下
-3. jt1078视频 [详情](./example/jt1078/README.md)
+- This project is better supported with the goal of facilitating secondary development. You can accomplish corresponding functions through various custom events. Common use cases are listed below:
+3. jt1078 Video [Details](./example/jt1078/README.md)
 
-``` txt
-jt808服务端 jt1078服务端 模拟器在本机
-平台下发0x9101指令 模拟器开始发送流
+```txt
+jt808 server jt1078 server emulator on the local machine
+Platform sends 0x9101 command, emulator starts streaming
 ```
-| 流媒体服务 | 语言 | 在线播放地址       | 说明 |
-|----------|-----|-------------------|-----|
-| LAL | go  | http://49.234.235.7:8080/live/295696659617_1.flv | [详情点击](./example/jt1078/README.md#lal)  |
-| sky-java | java  | 需要部署后 HTTP请求 10秒内拉流 参考格式如下 <br/> http://222.244.144.181:7777/video/1001-1-0-0.live.mp4 | [详情点击](./example/jt1078/README.md#sky-java)  |
+| Streaming Service | Language | Online Playback URL | Description |
+|-------------------|----------|----------------------|-------------|
+| LAL | Go | http://49.234.235.7:8080/live/295696659617_1.flv | [Click for details](./example/jt1078/README.md#lal) |
+| sky-java | Java | Requires deployment, HTTP request within 10 seconds to pull the stream. Reference format as follows: <br/> http://222.244.144.181:7777/video/1001-1-0-0.live.mp4 | [Click for details](./example/jt1078/README.md#sky-java) |
 
-2. 存储经纬度 [代码参考](./example/simulator/server/main.go)
-``` txt
-jt808服务端 模拟器 消息队列 数据库都运行在2核4G腾讯云服务器
-测试每秒保存5000条的情况 约5.5小时保存了近1亿的经纬度
-```
-
-3. 平台下发指令给终端 [代码参考](./example/protocol/active_reply/main.go)
-``` txt
-主动下发给设备指令 获取应答的情况
+2. Storing Latitude and Longitude [Code Reference](./example/simulator/server/main.go)
+```txt
+jt808 server, emulator, message queue, and database all running on a 2-core 4GB Tencent Cloud server
+Tested saving 5000 records per second, saved nearly 100 million latitude and longitude in about 5.5 hours
 ```
 
-4. 协议交互详情 [代码参考](./example/protocol/register/main.go)
-``` txt
-使用自定义模拟器 可以轻松生成测试用的报文 有详情描述
+3. Platform Sends Commands to Terminal [Code Reference](./example/protocol/active_reply/main.go)
+```txt
+Active commands sent to device to receive responses
 ```
 
-5. 自定义协议扩展 [代码参考](./example/protocol/custom_parse/main.go)
-``` txt
-自定义附加信息处理 获取想要的扩展内容
+4. Protocol Interaction Details [Code Reference](./example/protocol/register/main.go)
+```txt
+Using a custom emulator, you can easily generate test messages with detailed descriptions
+```
+
+5. Custom Protocol Extensions [Code Reference](./example/protocol/custom_parse/main.go)
+```txt
+Handle custom additional information to obtain desired extension content
 ```
 
 ---
-- 看飞哥的单机TCP百万并发 好奇有数据情况的表现 因此国庆准备试一试有数据的情况
-- 性能测试 单机[2核4G机器]并发10w+ 每日保存4亿+经纬度 [详情](./README.md#save)
-- 支持JT808(2011/2013/209) JT1078(需要其他流媒体服务) 支持分包和自动补传
 
-| 特点  |   描述   |
-| :---:   | -------- |
-|  安全可靠 | 核心协议部分测试覆盖率100% 纯原生go实现(不依赖任何库)  |
-|  简洁优雅 | 核心代码不到1000行 不使用任何锁 仅使用channel完成  |
-|  易于扩展 | 方便二次开发 有JT1078流媒体对接 保存经纬度等案例  |
+- Observing Fei Ge's single-machine TCP million concurrency, curious about performance with data, planning to test with data during the National Day holiday
+- Performance testing on a single machine [2-core 4GB machine], concurrent 100k+, saving 400 million+ latitude and longitude daily [Details](./README.md#save)
+- Supports JT808 (2011/2013/209) JT1078 (requires other streaming media services), supports segmentation and automatic retransmission
+
+| Feature | Description |
+|:-------:|-------------|
+| Safe and Reliable | Core protocol components tested with 100% coverage, pure native Go implementation (no dependencies) |
+| Simple and Elegant | Core code under 1000 lines, no locks used, utilizes only channels |
+| Easy to Extend | Convenient for secondary development, includes JT1078 streaming media integration, storing latitude and longitude, and other use cases |
 
 ---
 
-## 快速开始
-``` go
+## Quick Start
+```go
 package main
 
 import (
@@ -72,109 +73,106 @@ func main() {
 	)
 	goJt808.Run()
 }
-
 ```
 
 ---
-- 目前(2024-10-01)前的go语言版本个人觉得都不好因此都不推荐参考 推荐参考资料如下
-## 参考资料
-| 项目名称           | 语言   | 日期       | Star 数 | 链接                                       |
-|--------------------|--------|------------|---------|--------------------------------------------|
-| JT808           | C#     | 2024-10-01 | 534       | [JT808 C#](https://github.com/SmallChi/JT808.git) |
-| jt808-server    | Java   | 2024-10-01 | 1.4k+     | [JT808 Java](https://gitee.com/yezhihao/jt808-server.git) |
+- Currently (2024-10-01), I personally find the Go language versions before this date unsatisfactory and do not recommend referencing them. Recommended reference materials are listed below:
 
-- [飞哥的开发内功修炼](https://github.com/yanfeizhang/coder-kung-fu?tab=readme-ov-file)
-- [协议文档 (PDF整理)](https://gitee.com/yezhihao/jt808-server/tree/master/协议文档 )
-- [协议文档 (官网)](https://jtst.mot.gov.cn/hb/search/stdHBView?id=a3011cd31e6602ec98f26c35329e88e4)
-- [协议解析网站](https://jttools.smallchi.cn/jt808)
-- [bcd转dec编码](https://github.com/deatil/lakego-admin/tree/main/pkg/lakego-pkg/go-encoding/bcd)
-- [lal流媒体文档](https://pengrl.com/lal/#/streamurllist)
+## Reference Materials
+| Project Name | Language | Date | Star Count | Link |
+|--------------|----------|------|------------|------|
+| JT808 | C# | 2024-10-01 | 534 | [JT808 C#](https://github.com/SmallChi/JT808.git) |
+| jt808-server | Java | 2024-10-01 | 1.4k+ | [JT808 Java](https://gitee.com/yezhihao/jt808-server.git) |
 
-## 性能测试
-- java模拟器(QQ群下载 373203450)
-- go模拟器 [详情点击](./example/simulator/client/main.go#go模拟器)
+- [Fei Ge's Development Kung Fu](https://github.com/yanfeizhang/coder-kung-fu?tab=readme-ov-file)
+- [Protocol Documents (PDF Compilation)](https://gitee.com/yezhihao/jt808-server/tree/master/协议文档)
+- [Protocol Documents (Official Website)](https://jtst.mot.gov.cn/hb/search/stdHBView?id=a3011cd31e6602ec98f26c35329e88e4)
+- [Protocol Parsing Website](https://jttools.smallchi.cn/jt808)
+- [BCD to DEC Encoding](https://github.com/deatil/lakego-admin/tree/main/pkg/lakego-pkg/go-encoding/bcd)
+- [LAL Streaming Media Documentation](https://pengrl.com/lal/#/streamurllist)
 
-### 连接数测试
-[详情点击](./example/simulator/README.md#online)
+## Performance Testing
+- Java emulator (QQ group download 373203450)
+- Go emulator [Click for details](./example/simulator/client/main.go#go-emulator)
 
-- 2台云服务器各开5w+客户端 总计10w+
+### Connection Count Testing
+[Click for details](./example/simulator/README.md#online)
 
-| 服务端版本  |   场景   | 并发数 |  服务器配置  | 服务器使用资源情况 |  描述  |
-| :---:   | :-------: | :--: | :------: | :-------------- | :----------------------------: |
-|  v0.3.0 | 连接数测试  | 10w+ |  2核4G | 120%+cpu 1.7G内存  | 10.0.16.5上开启服务端和模拟器  <br/> 10.0.16.14机器上开启模拟器 |
+- 2 cloud servers each running 50k+ clients, totaling 100k+
 
-<h3 id="save"> 模拟经纬度存储测试 </h3>
+| Server Version | Scenario | Concurrent Count | Server Configuration | Server Resource Usage | Description |
+|:--------------:|:--------:|:----------------:|:--------------------:|:----------------------:|:------------:|
+| v0.3.0 | Connection Count Test | 100k+ | 2-core 4GB | 120%+ CPU, 1.7G Memory | Server and emulator started on 10.0.16.5 <br/> Emulator started on 10.0.16.14 |
 
-[详情点击](./example/simulator/README.md#save)
+<h3 id="save"> Latitude and Longitude Storage Simulation Test </h3>
 
-- save进程丢失了部分数据 channel队列溢出抛弃 (测试channel队列为100)
-- 保存1亿丢失826条 保存4.32亿丢失1216条（分两次测试)
+[Click for details](./example/simulator/README.md#save)
 
-| 服务端版本  | 客户端 |  服务器配置  | 服务使用资源情况 |  描述  |
-| :---:   | :--: | :------: | :-------------- | :----------------------------: |
-|  v0.3.0 | 1w go模拟器 |  2核4G | 35%cpu 180.4MB内存 | 每秒5000 一共保存经纬度1亿  <br/> 实际保存99999174 成功率99.999% |
+- Save process lost some data due to channel queue overflow (tested channel queue size was 100)
+- Saved 100 million lost 826 records, saved 432 million lost 1216 records (tested twice)
 
-| 服务  |   cpu   | 内存 | 描述 |
-| :---:   | :-------: | :--: | :--: |
-|  server | 35% | 180.4MB | 808服务端 |
-|  client | 23% | 196MB | 模拟客户端 |
-|  save |  18% | 68.8MB | 存储数据服务 |
-|  nats-server | 20% | 14.8MB | 消息队列 |
-|  taosadapter | 37% | 124.3MB | tdengine数据库适配 |
-|  taosd | 15% | 124.7MB | tdengine数据库 |
-## 使用案例
+| Server Version | Client | Server Configuration | Server Resource Usage | Description |
+|:--------------:|:------:|:--------------------:|:----------------------:|:-----------:|
+| v0.3.0 | 10k Go emulators | 2-core 4GB | 35% CPU, 180.4MB Memory | Saving 100 million latitude and longitude at 5000 per second <br/> Actually saved 99,999,174 with a success rate of 99.999% |
 
-### 1. 协议处理
+| Service | CPU | Memory | Description |
+|:-------:|:---:|:-----:|:-----------:|
+| server | 35% | 180.4MB | 808 server |
+| client | 23% | 196MB | Emulator clients |
+| save | 18% | 68.8MB | Data storage service |
+| nats-server | 20% | 14.8MB | Message queue |
+| taosadapter | 37% | 124.3MB | TDengine database adapter |
+| taosd | 15% | 124.7MB | TDengine database |
 
-#### 1.1 协议解析
-``` go
+## Use Cases
+
+### 1. Protocol Handling
+
+#### 1.1 Protocol Parsing
+```go
 func main() {
-	t := terminal.New(terminal.WithHeader(consts.JT808Protocol2013, "1")) // 自定义模拟器 2013版本
-	data := t.CreateDefaultCommandData(consts.T0100Register) // 生成的预值注册指令 0x0100
-	fmt.Println(fmt.Sprintf("模拟器生成的[%x]", data))
+	t := terminal.New(terminal.WithHeader(consts.JT808Protocol2013, "1")) // Custom emulator, 2013 version
+	data := t.CreateDefaultCommandData(consts.T0100Register) // Generate default registration command 0x0100
+	fmt.Println(fmt.Sprintf("Emulator generated [%x]", data))
 
 	jtMsg := jt808.NewJTMessage()
-	_ = jtMsg.Decode(data) // 解析固定请求头
+	_ = jtMsg.Decode(data) // Parse fixed request header
 
-	var t0x0100 model.T0x0100 // 把body数据解析到结构体中
+	var t0x0100 model.T0x0100 // Parse body data into struct
 	_ = t0x0100.Parse(jtMsg)
 	fmt.Println(jtMsg.Header.String())
 	fmt.Println(t0x0100.String())
 }
-
 ```
 
-部分输出 [输出详情](./example/protocol/README.md#register)
-``` txt
-模拟器生成的[7e010000300000000000010001001f006e63643132337777772e3830382e636f6d0000000000000000003736353433323101b2e2413132333435363738797e]
-[0100] 消息ID:[256] [终端-注册]
-消息体属性对象: {
-        [0000000000110000] 消息体属性对象:[48]
-        版本号:[JT2013]
+Partial Output [Output Details](./example/protocol/README.md#register)
+```txt
+Emulator generated [7e010000300000000000010001001f006e63643132337777772e3830382e636f6d0000000000000000003736353433323101b2e2413132333435363738797e]
+[0100] Message ID:[256] [Terminal - Registration]
+Message Body Property Object: {
+        [0000000000110000] Message Body Property Object:[48]
+        Version Number:[JT2013]
         [bit15] [0]
-        [bit14] 协议版本标识:[0]
-        [bit13] 是否分包:[false]
-        [bit10-12] 加密标识:[0] 0-不加密 1-RSA
-        [bit0-bit9] 消息体长度:[48]
+        [bit14] Protocol Version Flag:[0]
+        [bit13] Is Segmented:[false]
+        [bit10-12] Encryption Flag:[0] 0-None, 1-RSA
+        [bit0-bit9] Message Body Length:[48]
 }
-[000000000001] 终端手机号:[1]
-[0001] 消息流水号:[1]
-数据体对象:{
-        终端-注册:[001f006e63643132337777772e3830382e636f6d0000000000000000003736353433323101b2e2413132333435363738]
-        [001f] 省域ID:[31]
-        [006e] 市县域ID:[110]
-        [6364313233] 制造商ID(5):[cd123]
-        [7777772e3830382e636f6d000000000000000000] 终端型号(20):[www.808.com]
-        [37363534333231] 终端ID(7):[7654321]
-        [01] 车牌颜色:[1]
-        [b2e2413132333435363738] 车牌号:[测A12345678]
+[000000000001] Terminal Phone Number:[1]
+[0001] Message Serial Number:[1]
+Data Body Object:{
+        [001f006e6364313233] Manufacturer ID (5):[cd123]
+        [7777772e3830382e636f6d000000000000000000] Terminal Model (20):[www.808.com]
+        [37363534333231] Terminal ID (7):[7654321]
+        [01] License Plate Color:[1]
+        [b2e2413132333435363738] License Plate Number:[Test A12345678]
 }
 ```
 
-#### 1.2 自定义协议扩展 (附加信息)
+#### 1.2 Custom Protocol Extensions (Additional Information)
 
-自定义解析扩展 0x33为例 关键代码如下
-``` go
+Custom parsing extension 0x33 as an example. Key code is as follows:
+```go
 func (l *Location) Parse(jtMsg *jt808.JTMessage) error {
 	l.T0x0200AdditionDetails.CustomAdditionContentFunc = func(id uint8, content []byte) (model.AdditionContent, bool) {
 		if id == uint8(consts.A0x01Mile) {
@@ -195,30 +193,30 @@ func (l *Location) Parse(jtMsg *jt808.JTMessage) error {
 
 func (l *Location) OnReadExecutionEvent(message *service.Message) {
 	if v, ok := tmp.Additions[consts.A0x01Mile]; ok {
-		fmt.Println(fmt.Sprintf("里程[%d] 自定义辅助里程[%d]", v.Content.Mile, tmp.customMile))
+		fmt.Println(fmt.Sprintf("Mileage [%d] Custom Auxiliary Mileage [%d]", v.Content.Mile, tmp.customMile))
 	}
 	id := consts.JT808LocationAdditionType(0x33)
 	if v, ok := tmp.Additions[id]; ok {
-		fmt.Println("自定义未知信息扩展", v.Content.CustomValue, tmp.customValue)
+		fmt.Println("Custom Unknown Information Extension", v.Content.CustomValue, tmp.customValue)
 	}
 }
 ```
 
-部分输出 [输出详情](./example/protocol/README.md#custom)
-``` txt
-里程[11] 自定义辅助里程[100]
-自定义未知信息扩展 32 32
+Partial Output [Output Details](./example/protocol/README.md#custom)
+```txt
+Mileage [11] Custom Auxiliary Mileage [100]
+Custom Unknown Information Extension 32 32
 ```
 
-#### 1.3 平台下发给终端参数 (8104查询终端参数)
+#### 1.3 Platform Sends Parameters to Terminal (8104 Query Terminal Parameters)
 
-关键代码如下
-``` go
+Key code is as follows:
+```go
 	replyMsg := goJt808.SendActiveMessage(&service.ActiveMessage{
-		Key:              phone,                           // 默认使用手机号作为唯一key 根据key找到对应终端的TCP链接
-		Command:          consts.P8104QueryTerminalParams, // 下发的指令
-		Body:             nil,                             // 下发的body数据 8104为空
-		OverTimeDuration: 3 * time.Second,                 // 超时时间 设备这段时间没有回复则失败
+		Key:              phone,                           // Defaults to using phone number as the unique key to find the corresponding terminal's TCP connection
+		Command:          consts.P8104QueryTerminalParams, // Command to send
+		Body:             nil,                             // Body data to send, 8104 has no body
+		OverTimeDuration: 3 * time.Second,                 // Timeout duration; fails if the device does not respond within this time
 	})
 	var t0x0104 model.T0x0104
 	if err := t0x0104.Parse(replyMsg.JTMessage); err != nil {
@@ -227,32 +225,32 @@ func (l *Location) OnReadExecutionEvent(message *service.Message) {
 	fmt.Println(t0x0104.String())
 ```
 
-部分输出 [输出详情](./example/protocol/README.md#active_reply)
-``` txt
-数据体对象:{
-        [0003] 应答消息流水号:[3]
-        [5b] 应答参数个数:[91]
-        终端-查询参数:
+Partial Output [Output Details](./example/protocol/README.md#active_reply)
+```txt
+Data Body Object:{
+        [0003] Response Message Serial Number:[3]
+        [5b] Number of Response Parameters:[91]
+        Terminal Query Parameters:
 
         {
-                [0001]终端参数ID:1 终端心跳发送间隔,单位为秒(s)
-                参数长度[4] 是否存在[true]
-                [0000000a]参数值:[10]
+                [0001] Terminal Parameter ID:1 Terminal Heartbeat Interval, in seconds (s)
+                Parameter Length [4] Exists [true]
+                [0000000a] Parameter Value:[10]
         }
 		...
         {
-                [0110]终端参数ID:272 CAN总线ID单独采集设置:
-                参数长度[8] 是否存在[true]
-                [0000000000000101]参数值:[[0 0 0 0 0 0 1 1]]
+                [0110] Terminal Parameter ID:272 CAN Bus ID Collection Settings:
+                Parameter Length [8] Exists [true]
+                [0000000000000101] Parameter Value:[[0 0 0 0 0 0 1 1]]
         }
-        未知终端参数id:[33 117 118 119 121 122 123 124]
+        Unknown Terminal Parameter IDs:[33 117 118 119 121 122 123 124]
 }
 ```
 
-### 2. 自定义保存经纬度
-[详情点击](./example/simulator/server/main.go)
-- 自定义实现0x0200的消息处理 把数据发送到nats 关键代码如下
-``` go
+### 2. Custom Latitude and Longitude Storage
+[Click for details](./example/simulator/server/main.go)
+- Custom implementation of 0x0200 message handling to send data to NATS. Key code is as follows:
+```go
 type T0x0200 struct {
 	model.T0x0200
 }
@@ -273,9 +271,9 @@ func (t *T0x0200) OnReadExecutionEvent(message *service.Message) {
 func (t *T0x0200) OnWriteExecutionEvent(_ service.Message) {}
 ```
 
--  使用自定义0x0200消息处理启动
+- Start with custom 0x0200 message handling
 
-``` go
+```go
 	goJt808 := service.New(
 		service.WithHostPorts("0.0.0.0:8080"),
 		service.WithNetwork("tcp"),
@@ -288,15 +286,14 @@ func (t *T0x0200) OnWriteExecutionEvent(_ service.Message) {}
 	goJt808.Run()
 ```
 
-### 3. jt808附件上传
+### 3. jt808 Attachment Upload
 
-### 4. jt1078相关
+### 4. jt1078 Related
 
-#### 4.1 流媒体服务使用lal
+#### 4.1 Using LAL for Streaming Media Service
 
--  把1078格式流转对应格式 放入lal服务中 核心代码参考
-
-``` go
+- Convert 1078 format stream to the corresponding format and insert it into the LAL service. Core code reference:
+```go
 func (j *jt1078) createStream(name string) chan<- *Packet {
 	...
 	ch := make(chan *Packet, 100)
@@ -312,7 +309,7 @@ func (j *jt1078) createStream(name string) chan<- *Packet {
 				case PTH265:
 					tmp.PayloadType = base.AvPacketPtHevc
 				default:
-					slog.Warn("未知类型",
+					slog.Warn("Unknown type",
 						slog.Any("pt", v.Flag.PT))
 				}
 				if err := session.FeedAvPacket(tmp); err != nil {
@@ -325,38 +322,39 @@ func (j *jt1078) createStream(name string) chan<- *Packet {
 }
 ```
 
-## 协议对接完成情况
-### JT808 终端通讯协议消息对照表
+## Protocol Integration Completion Status
 
-| 序号  |    消息 ID    | 完成情况 |  测试情况  | 消息体名称                     |  2019 版本   | 2011 版本 |
-| :---: | :-----------: | :------: | :--------: | :----------------------- | :----------: | :-------: |
-|   1   |    0x0001     |    ✅    |     ✅     | 终端通用应答				|				|			|
-|   2   |    0x8001     |    ✅    |     ✅     | 平台-通用应答				|				|           |
-|   3   |    0x0002     |    ✅    |     ✅     | 终端心跳					|				|           |
-|   5   |    0x0100     |    ✅    |     ✅     | 终端注册					|     修改		|  被修改	|
-|   4   |    0x8003     |    ✅    |     ✅     | 补传分包请求                |               |  被新增    |
-|   6   |    0x8100     |    ✅    |     ✅     | 平台-注册应答				|				|           |
-|   9   |    0x8103     |    ✅    |     ✅     | 设置终端参数                |  修改且增加  	|  被修改    |
-|   8   |    0x0102     |    ✅    |     ✅     | 终端鉴权					|     修改		|			|
-|  10   |    0x8104     |    ✅    |     ✅     | 平台-查询终端参数			|				|           |
-|  11   |    0x0104     |    ✅    |     ✅     | 查询终端参数应答			|				|           |
-|  18   |    0x0200     |    ✅    |     ✅     | 位置信息汇报				| 增加附加信息 	|  被修改	|
-|  49   |    0x0704     |    ✅    |     ✅     | 定位数据批量上传			|     修改		|  被新增	|
+### JT808 Terminal Communication Protocol Message Mapping Table
 
-### JT1078 扩展 JT808 议消息对照表
+| No. | Message ID | Completion Status | Test Status | Message Body Name | 2019 Version | 2011 Version |
+|-----|------------|--------------------|-------------|-------------------|--------------|--------------|
+| 1   | 0x0001     | ✅ | ✅ | Terminal General Response | | |
+| 2   | 0x8001     | ✅ | ✅ | Platform General Response | | |
+| 3   | 0x0002     | ✅ | ✅ | Terminal Heartbeat | | |
+| 5   | 0x0100     | ✅ | ✅ | Terminal Registration | Modified | Modified |
+| 4   | 0x8003     | ✅ | ✅ | Request for Re-transmission and Segmentation | | Added |
+| 6   | 0x8100     | ✅ | ✅ | Platform Registration Response | | |
+| 9   | 0x8103     | ✅ | ✅ | Set Terminal Parameters | Modified and Added | Modified |
+| 8   | 0x0102     | ✅ | ✅ | Terminal Authentication | Modified | |
+| 10  | 0x8104     | ✅ | ✅ | Platform Query Terminal Parameters | | |
+| 11  | 0x0104     | ✅ | ✅ | Query Terminal Parameters Response | | |
+| 18  | 0x0200     | ✅ | ✅ | Location Information Report | Added Additional Information | Modified |
+| 49  | 0x0704     | ✅ | ✅ | Bulk Upload of Positioning Data | Modified | Added |
 
-| 序号  |    消息 ID     | 完成情况 	| 测试情况 | 消息体名称 |
-| :---: | :-----------: | :------: | :--------: | :----------------------- |
-|  13   |    0x1003     |    ✅    |    ✅    | 终端上传音视频属性       |
-|  14   |    0x1005     |    ✅    |    ✅    | 终端上传乘客流量         |
-|  15   |    0x1205     |    ✅    |    ✅    | 终端上传音视频资源列表   |
-|  16   |    0x1206     |    ✅    |    ✅    | 文件上传完成通知         |
-|  17   |    0x9003     |    ✅    |    ✅    | 平台-查询终端音视频属性       |
-|  18   |    0x9101     |    ✅    |    ✅    | 平台-实时音视频传输请求       |
-|  19   |    0x9102     |    ✅    |    ✅    | 平台-音视频实时传输控制       |
-|  20   |    0x9105     |    ✅    |    ✅    | 平台-实时音视频传输状态通知   |
-|  21   |    0x9201     |    ✅    |    ✅    | 平台-下发远程录像回放请求 |
-|  22   |    0x9202     |    ✅    |    ✅    | 平台-下发远程录像回放控制 |
-|  23   |    0x9205     |    ✅    |    ✅    | 平台-查询资源列表             |
-|  24   |    0x9206     |    ✅    |    ✅    | 平台-文件上传指令             |
-|  25   |    0x9207     |    ✅    |    ✅    | 平台-文件上传控制             |
+### JT1078 Extended JT808 Protocol Message Mapping Table
+
+| No. | Message ID | Completion Status | Test Status | Message Body Name |
+|-----|------------|-------------------|-------------|-------------------|
+| 13  | 0x1003     | ✅ | ✅ | Terminal Upload Audio/Video Properties |
+| 14  | 0x1005     | ✅ | ✅ | Terminal Upload Passenger Flow |
+| 15  | 0x1205     | ✅ | ✅ | Terminal Upload Audio/Video Resource List |
+| 16  | 0x1206     | ✅ | ✅ | File Upload Completion Notification |
+| 17  | 0x9003     | ✅ | ✅ | Platform Query Terminal Audio/Video Properties |
+| 18  | 0x9101     | ✅ | ✅ | Platform Real-time Audio/Video Transmission Request |
+| 19  | 0x9102     | ✅ | ✅ | Platform Audio/Video Real-time Transmission Control |
+| 20  | 0x9105     | ✅ | ✅ | Platform Real-time Audio/Video Transmission Status Notification |
+| 21  | 0x9201     | ✅ | ✅ | Platform Remote Video Playback Request |
+| 22  | 0x9202     | ✅ | ✅ | Platform Remote Video Playback Control |
+| 23  | 0x9205     | ✅ | ✅ | Platform Query Resource List |
+| 24  | 0x9206     | ✅ | ✅ | Platform File Upload Command |
+| 25  | 0x9207     | ✅ | ✅ | Platform File Upload Control |
