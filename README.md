@@ -1,7 +1,7 @@
 # go-jt808
 
 - This project is better supported with the goal of facilitating secondary development. You can accomplish corresponding functions through various custom events. Common use cases are listed below:
-3. jt1078 Video [Details](./example/jt1078/README.md)
+1. jt1078 Video [Details](./example/jt1078/README.md)
 
 ```txt
 jt808 server jt1078 server emulator on the local machine
